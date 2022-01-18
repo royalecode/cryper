@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636882965110",
+    "project_id": "cryper-e9244",
+    "storage_bucket": "cryper-e9244.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636882965110:android:9e55bc3513e7256b468557",
+        "android_client_info": {
+          "package_name": "com.salle.cryper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636882965110-vj8a809c9d5ts5i3dvi7p604pj6fm803.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEkrIQQMdQv6G2lVt7N5orBwryvTO5KIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636882965110-vj8a809c9d5ts5i3dvi7p604pj6fm803.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
