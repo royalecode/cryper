@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 30),
                             const Text(
-                              "Don't have an account?",
+                              "Don't have an account?   hola",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
