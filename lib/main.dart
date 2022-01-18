@@ -1,10 +1,17 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cryper/login.dart';
 import 'package:cryper/register.dart';
+import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'controllers/common_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +25,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    Get.put(CommonController());
+    return GetMaterialApp(
       title: 'Cryper app',
       theme: ThemeData(
         // This is the theme of your application.
@@ -33,7 +41,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AnimatedSplashScreen(
-        nextScreen: LoginScreen(),
+        nextScreen: TabScreen(),
         splash: Center(
           child: SvgPicture.asset("assets/images/logoCryper.svg"),
         ),
