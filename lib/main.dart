@@ -11,7 +11,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'controllers/common_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +24,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(CommonController());
-    return GetMaterialApp(
+
+    return MaterialApp(
       title: 'Cryper app',
       theme: ThemeData(
         // This is the theme of your application.

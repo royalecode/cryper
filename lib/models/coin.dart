@@ -7,8 +7,8 @@ class Coin {
   int? marketCap;
   int? marketCapRank;
   int? fullyDilutedValuation;
-  int? totalVolume;
-  num? high24h;
+  double? totalVolume;
+  double? high24h;
   num? low24h;
   num? priceChange24h;
   num? priceChangePercentage24h;
@@ -63,8 +63,8 @@ class Coin {
     marketCap = json['market_cap'];
     marketCapRank = json['market_cap_rank'];
     fullyDilutedValuation = json['fully_diluted_valuation'];
-    totalVolume = json['total_volume'];
-    high24h = json['high_24h'];
+    totalVolume = json['total_volume'].toDouble();
+    high24h = json['high_24h'].toDouble();
     low24h = json['low_24h'];
     priceChange24h = json['price_change_24h'];
     priceChangePercentage24h = json['price_change_percentage_24h'];
