@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cryper/api/api_interface.dart';
 import 'package:cryper/components/coinList.dart';
 import 'package:cryper/constantes_app.dart';
@@ -7,7 +5,6 @@ import 'package:cryper/models/coin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class TabFavoritos extends StatefulWidget {

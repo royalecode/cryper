@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:cryper/models/coin.dart';
-import 'package:cryper/screens/tab_favoritos.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constantes_app.dart';
 
 

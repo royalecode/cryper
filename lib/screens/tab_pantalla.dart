@@ -1,5 +1,4 @@
 import 'package:cryper/constantes_app.dart';
-import 'package:cryper/models/coin.dart';
 import 'package:cryper/screens/tab_favoritos.dart';
 import 'package:cryper/screens/tab_lista.dart';
 import 'package:cryper/screens/tab_perfil.dart';
