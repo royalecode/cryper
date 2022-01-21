@@ -2,7 +2,6 @@ import 'package:cryper/api/api_interface.dart';
 import 'package:cryper/components/coinList.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
-import 'package:cryper/models/coins_list_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +9,10 @@ import 'package:flutter/services.dart';
 
 
 class TabLista extends StatefulWidget {
+
+
+
+
   const TabLista({Key? key}) : super(key: key);
 
   @override
@@ -21,8 +24,6 @@ class _TabLista extends State<TabLista> {
   var searchController = TextEditingController();
   List<Coin> coinsSearchList = [];
   List<Coin> coinlist = [];
-
-
 
 
   @override
@@ -105,27 +106,27 @@ class _TabLista extends State<TabLista> {
                       },
                     ),
                 SizedBox(height: 20,),
-                    Expanded(
-                      child: coinsSearchList.length != 0 ||
-                          searchController.text.isNotEmpty
-                          ? ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: coinsSearchList.length,
-                          itemBuilder: (context, index) {
-                            return CoinList(
-                              coin: coinsSearchList[index]);
-                          })
-                          : ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: coinlist.length,
-                          itemBuilder: (context, index) {
-                            return CoinList(
-                                coin: coinlist[index]);
-
-                          }),
-                    ),
+                        Expanded(
+                          child:
+                          coinsSearchList.length != 0 ||
+                              searchController.text.isNotEmpty
+                              ? ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: coinsSearchList.length,
+                              itemBuilder: (context, index) {
+                                return CoinList(
+                                  coin: coinsSearchList[index], remove: false,);
+                              })
+                              : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: coinlist.length,
+                              itemBuilder: (context, index) {
+                                return CoinList(
+                                  coin: coinlist[index], remove: false,);
+                              }),
+                        ),
 
                   ],
                 )
