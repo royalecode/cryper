@@ -1,4 +1,5 @@
 import 'package:cryper/constantes_app.dart';
+import 'package:cryper/models/coin.dart';
 import 'package:cryper/screens/tab_favoritos.dart';
 import 'package:cryper/screens/tab_lista.dart';
 import 'package:cryper/screens/tab_perfil.dart';
@@ -14,6 +15,8 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
+
+
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     TabLista(),

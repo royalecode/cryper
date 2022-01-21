@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:cryper/models/coin.dart';
+import 'package:cryper/screens/tab_favoritos.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constantes_app.dart';
 
 
@@ -7,7 +12,9 @@ class CoinList extends StatelessWidget {
 
   final Coin coin;
 
-  CoinList({Key? key, required this.coin}) : super(key: key);
+  bool remove;
+
+  CoinList({Key? key, required this.coin,required this.remove}) : super(key: key);
 
   Widget build(BuildContext context) {
     return GestureDetector(onTap: () {
@@ -92,22 +99,42 @@ class CoinList extends StatelessWidget {
             children: <Widget>[
 
               SizedBox(height: 10,),
-              InkWell(
-                onTap: (){
-                  print(coin.name);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-                    color: primaryColor,
+              if (remove == false)
+                InkWell(
+                  onTap: (){
+
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                      color: primaryColor,
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 17),
+                    width: double.infinity,
+                    child: Center(
+                      child: Text("Add to favorite",style: TextStyle(color: whiteColor,fontSize: 14,fontWeight: FontWeight.bold),),
+                    ),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 17),
-                  width: double.infinity,
-                  child: Center(
-                    child: Text("Add to favorite",style: TextStyle(color: whiteColor,fontSize: 14,fontWeight: FontWeight.bold),),
+                )
+               else
+                InkWell(
+                  onTap: (){
+
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                      color: primaryColor,
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 17),
+                    width: double.infinity,
+                    child: Center(
+                      child: Text("Remove from favorite",style: TextStyle(color: whiteColor,fontSize: 14,fontWeight: FontWeight.bold),),
+                    ),
                   ),
                 ),
-              ),
+
+
               InkWell(
                 onTap: (){
                   Navigator.pop(context);
@@ -131,6 +158,13 @@ class CoinList extends StatelessWidget {
       );
     });
   }
+
+
+ /* save(String key, value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, json.encode(value));
+  }*/
+
   }
 
 

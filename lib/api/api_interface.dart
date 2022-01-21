@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../constantes_app.dart';
 import 'package:http/http.dart' as http;
 
-class ApiInterface extends GetConnect{
+class ApiInterface {
 
 
 
