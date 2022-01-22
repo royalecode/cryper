@@ -29,13 +29,11 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: primaryColor,
     ));
 
     return Scaffold(
-
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -43,23 +41,44 @@ class _TabScreenState extends State<TabScreen> {
         backgroundColor: lightColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.home_outlined),
+            ),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.home),
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.heart_fill),
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.favorite_border_outlined),
+            ),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.favorite),
+            ),
             label: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person_circle),
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.account_circle_outlined),
+            ),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(bottom: 2),
+              child: Icon(Icons.account_circle),
+            ),
             label: 'Profile',
           ),
-
-
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: lightBlueColor,
+        selectedItemColor: Colors.white,
         unselectedItemColor: greyColor,
+        selectedFontSize: 12,
+        selectedIconTheme: IconThemeData(color: lightBlueColor),
         onTap: _onItemTapped,
       ),
     );
