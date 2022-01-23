@@ -1,5 +1,7 @@
 import 'package:cryper/components/mainButton.dart';
 import 'package:cryper/register.dart';
+import 'package:cryper/screens/tab_pantalla.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +12,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String _email = '', _password = '';
+  final auth = FirebaseAuth.instance;
+  String _email = '', _password = '', errorMessage = '';
+  bool checkEmail = false, _errorBool = false;
 
   @override
   Widget build(BuildContext ctxt) {
@@ -56,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 20),
                             TextField(
                                 textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.visiblePassword,
                                 style: TextStyle(color: Colors.white),
                                 obscureText: true,
                                 decoration: const InputDecoration(
@@ -78,17 +81,38 @@ class _LoginScreenState extends State<LoginScreen> {
                                     _password = value.trim();
                                   });
                                 }),
-                            const SizedBox(height: 30),
-                            MainButton(
-                              text: 'Login',
-                              name: 'None',
-                              email: _email,
-                              password: _password,
-                              newUser: false,
+                            const SizedBox(height: 20),
+                            Visibility(
+                              visible: _errorBool,
+                              child: Text(
+                                errorMessage,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.red),
+                              ),
                             ),
+                            const SizedBox(height: 15),
+                            Container(
+                                child: SizedBox(
+                              width: double.maxFinite,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF586AF8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    textStyle: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                onPressed: () {
+                                  loginAction();
+                                },
+                                child: Text('Login'),
+                              ),
+                            )),
                             const SizedBox(height: 30),
                             const Text(
-                              "Don't have an account?   hola",
+                              "Don't have an account?",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -118,8 +142,46 @@ class _LoginScreenState extends State<LoginScreen> {
     RegExp regExp = new RegExp(p);
 
     if (!regExp.hasMatch(em) && em.isNotEmpty) {
+      checkEmail = false;
       return "Email format is not valid";
+    } else {
+      checkEmail = true;
     }
     return null;
+  }
+
+  void loginAction() async {
+    if (checkEmail) {
+      try {
+        await auth.signInWithEmailAndPassword(
+            email: _email, password: _password);
+        setState(() {
+          _errorBool = true;
+        });
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => TabScreen()));
+      } on FirebaseAuthException catch (e) {
+        switch (e.code) {
+          case "wrong-password":
+            print('hey hey pwd incorrect');
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            print('user not found hey hey');
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        setState(() {
+          _errorBool = true;
+        });
+      }
+    } else {
+      setState(() {
+        errorMessage = "Email format is not valid";
+        _errorBool = true;
+      });
+    }
   }
 }

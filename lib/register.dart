@@ -1,4 +1,6 @@
-import 'package:cryper/components/mainButton.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String _name = '', _email = '', _password = '', _confirmPassword = '';
+  final auth = FirebaseAuth.instance;
+  String _name = '', _email = '', _password = '', _confirmPassword = '', errorMessage = '';
+  bool checkEmail = false, checkPassword = false, checkConfirmation = false, _errorBool = false;
 
   @override
   Widget build(BuildContext ctxt) {
@@ -122,14 +126,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     _confirmPassword = value.trim();
                                   });
                                 }),
-                            const SizedBox(height: 30),
-                            MainButton(
-                              text: 'Register',
-                              name: _name,
-                              email: _email,
-                              password: _password,
-                              newUser: true,
+                            const SizedBox(height: 20),
+                            Visibility(
+                              visible: _errorBool,
+                              child: Text(
+                                errorMessage,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.red),
+                              ),
                             ),
+                            const SizedBox(height: 15),
+                            Container(
+                                child: SizedBox(
+                                  width: double.maxFinite,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF586AF8),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        textStyle: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      registerAction();
+                                    },
+                                    child: Text('Register'),
+                                  ),
+                                )),
                             const SizedBox(height: 30),
                             const Text(
                               "Have an account?",
@@ -154,14 +179,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? validatePassword(String value) {
     if (!(value.length > 5) && value.isNotEmpty) {
+      checkPassword = false;
       return "Password should contain more than 5 characters";
+    } else {
+      checkPassword = true;
     }
     return null;
   }
 
   String? confirmPassword(String value) {
     if (_confirmPassword != _password && _confirmPassword.isNotEmpty) {
+      checkConfirmation = false;
       return "Confirm password must be the same as previous password";
+    } else {
+      checkConfirmation = true;
     }
     return null;
   }
@@ -171,8 +202,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
     RegExp regExp = new RegExp(p);
 
     if (!regExp.hasMatch(em) && em.isNotEmpty) {
+      checkEmail = false;
       return "Email format is not valid";
+    } else {
+      checkEmail = true;
     }
     return null;
+  }
+
+  bool checkInformation() {
+    return checkEmail && checkPassword && checkConfirmation;
+  }
+
+  void registerAction() async {
+    if (checkInformation()) {
+      try {
+        await auth.createUserWithEmailAndPassword(
+            email: _email, password: _password);
+        User? user = await auth.currentUser;
+        print(user?.uid);
+        print(_email);
+        print(_name);
+
+        DocumentReference ref = FirebaseFirestore.instance
+            .collection('UserData')
+            .doc(user?.uid);
+        ref.set({"name": _name, "email": _email});
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => TabScreen()));
+      } on FirebaseAuthException catch (e) {
+        switch (e.code) {
+          case "email-already-in-use":
+            errorMessage = "This email is already registered.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        setState(() {
+          _errorBool = true;
+        });
+      }
+    } else {
+      setState(() {
+        errorMessage = "Email format is not valid";
+        _errorBool = true;
+      });
+    }
   }
 }
