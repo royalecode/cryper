@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AnimatedSplashScreen(
-        nextScreen: TabScreen(),
+        nextScreen: LoginScreen(),
         splash: Center(
           child: SvgPicture.asset("assets/images/logoCryper.svg"),
         ),
         duration: 2000,
-        pageTransitionType: PageTransitionType.bottomToTop,
+        pageTransitionType: PageTransitionType.fade,
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Color(0xFF191D2D),
       ),
