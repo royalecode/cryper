@@ -10,9 +10,6 @@ import 'package:flutter/services.dart';
 
 class TabLista extends StatefulWidget {
 
-
-
-
   const TabLista({Key? key}) : super(key: key);
 
   @override
@@ -20,7 +17,7 @@ class TabLista extends StatefulWidget {
 }
 
 class _TabLista extends State<TabLista> {
-  
+
   var searchController = TextEditingController();
   List<Coin> coinsSearchList = [];
   List<Coin> coinlist = [];
@@ -74,22 +71,24 @@ class _TabLista extends State<TabLista> {
                         )
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 15,),
                     TextField(
                       controller: searchController,
                       autofocus: false,
+                      textAlignVertical: TextAlignVertical.center,
                       style:TextStyle(
                         color: whiteColor.withOpacity(0.5),
                       ),
                       decoration: InputDecoration(
-                        suffix: Container(
-                          child: Icon(CupertinoIcons.search,color: whiteColor.withOpacity(0.5),),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 0,horizontal: 12),
+                        hintText: 'Search by name',
+                        hintStyle: TextStyle(color: whiteColor.withOpacity(0.5)),
+                        suffixIcon: Icon(CupertinoIcons.search,color: whiteColor.withOpacity(0.5)),
+                        isCollapsed: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                         fillColor: lightColor,
                         filled: true,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
+                          borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide.none,
                         ),
                       ),
@@ -105,7 +104,7 @@ class _TabLista extends State<TabLista> {
                         setState(() {});
                       },
                     ),
-                SizedBox(height: 20,),
+                SizedBox(height: 15,),
                         Expanded(
                           child:
                           coinsSearchList.length != 0 ||
