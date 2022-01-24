@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/api/api_interface.dart';
 import 'package:cryper/components/coinList.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +24,8 @@ class _TabFavoritos extends State<TabFavoritos> {
   List<Coin> coinlist = [];
 
   List<Coin> favoriteCoins = [];
-  List<String> strArr = ['ethereum', 'bitcoin','tether'];
+
+  List<String> _strArr = [];
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _TabFavoritos extends State<TabFavoritos> {
       });
     });
 
+    _getUserFavoriteCoins();
 
     super.initState();
 
@@ -41,8 +45,8 @@ class _TabFavoritos extends State<TabFavoritos> {
   @override
   Widget build(BuildContext context) {
     for (var i = 0; i < coinlist.length; i++) {
-      for(var j=0; j < strArr.length;j++) {
-        if (coinlist[i].id == strArr[j]) {
+      for(var j=0; j < _strArr.length;j++) {
+        if (coinlist[i].id == _strArr[j]) {
           favoriteCoins.add(coinlist[i]);
         }
       }
@@ -100,11 +104,23 @@ class _TabFavoritos extends State<TabFavoritos> {
   }
 void compareCoinsAndAddToFavorites(){
   for (var i = 0; i < coinlist.length; i++) {
-    for(var j=0; j < strArr.length;j++) {
-      if (coinlist[i].id == strArr[j]) {
+    for(var j=0; j < _strArr.length;j++) {
+      if (coinlist[i].id == _strArr[j]) {
         favoriteCoins.add(coinlist[i]);
       }
     }
   }
 }
+
+  Future<void> _getUserFavoriteCoins() async {
+    FirebaseFirestore.instance
+        .collection('UserData')
+        .doc((await FirebaseAuth.instance.currentUser!).uid)
+        .get()
+        .then((value) {
+      setState(() {
+          _strArr = List<String>.from(value.data()!["coins"]);
+      });
+    });
+  }
 }

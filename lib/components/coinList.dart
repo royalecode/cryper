@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/models/coin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constantes_app.dart';
@@ -98,7 +100,7 @@ class CoinList extends StatelessWidget {
               if (remove == false)
                 InkWell(
                   onTap: (){
-
+                    appendToArray(coin.id);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -115,7 +117,6 @@ class CoinList extends StatelessWidget {
                else
                 InkWell(
                   onTap: (){
-
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -133,6 +134,7 @@ class CoinList extends StatelessWidget {
 
               InkWell(
                 onTap: (){
+                  appendToArray("cardano");
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -155,6 +157,15 @@ class CoinList extends StatelessWidget {
     });
   }
 
+
+  Future<void> appendToArray(String ?coin) async {
+    FirebaseFirestore.instance
+        .collection('UserData')
+        .doc((await FirebaseAuth.instance.currentUser!).uid)
+        .update({
+            'coins': FieldValue.arrayUnion([coin]),
+    });
+  }
 
  /* save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();

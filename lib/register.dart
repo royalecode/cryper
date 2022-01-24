@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -224,10 +223,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         print(_email);
         print(_name);
 
-        DocumentReference ref = FirebaseFirestore.instance
+        FirebaseFirestore.instance
             .collection('UserData')
-            .doc(user?.uid);
-        ref.set({"name": _name, "email": _email});
+            .doc(user?.uid)
+            .set({"name": _name, "email": _email, "coins": []});
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => TabScreen()));
       } on FirebaseAuthException catch (e) {
