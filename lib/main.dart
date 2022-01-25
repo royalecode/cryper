@@ -1,7 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:cryper/Authenticate.dart';
+import 'package:cryper/AuthenticationProvider.dart';
 import 'package:cryper/login.dart';
 import 'package:cryper/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +13,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 
 void main() async {
@@ -24,31 +28,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: 'Cryper app',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: AnimatedSplashScreen(
-        nextScreen: LoginScreen(),
-        splash: Center(
-          child: SvgPicture.asset("assets/images/logoCryper.svg"),
-        ),
-        duration: 2000,
-        pageTransitionType: PageTransitionType.fade,
-        splashTransition: SplashTransition.fadeTransition,
-        backgroundColor: Color(0xFF191D2D),
-      ),
+    return MultiProvider(
+        providers: [
+          Provider<AuthenticationProvider?>(
+            create: (_) => AuthenticationProvider(FirebaseAuth.instance),
+          ),
+          StreamProvider(
+            create: (context) => context.read<AuthenticationProvider>().authState, initialData: null,
+          )
+        ],
+        child: MaterialApp(
+          title: 'Cryper app',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          home: AnimatedSplashScreen(
+            nextScreen: Authenticate(),
+            splash: Center(
+              child: SvgPicture.asset("assets/images/logoCryper.svg"),
+            ),
+            duration: 2000,
+            pageTransitionType: PageTransitionType.fade,
+            splashTransition: SplashTransition.fadeTransition,
+            backgroundColor: Color(0xFF191D2D),
+          ),
+        )
     );
   }
 }
@@ -124,7 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline4,
             ),
           ],
         ),
