@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 var primaryColor = const Color(0xFF191D2D);
+var accentColor = const Color(0xFFF77C3F);
 var lightColor = const Color(0xFF2A2F45);
 var lightBlueColor = const Color(0xFF586AF8);
 var greyColor = const Color(0xFF747E98);
