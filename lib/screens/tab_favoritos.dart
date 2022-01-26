@@ -78,11 +78,7 @@ class _TabFavoritos extends State<TabFavoritos> {
                     children: [
                       Text(
                         "Your Coins",
-                        style: TextStyle(
-                          color: whiteColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headline2,
                       )
                     ],
                   ),

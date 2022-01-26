@@ -97,6 +97,7 @@ class CoinList extends StatelessWidget {
                                   style: TextStyle(
                                     color: whiteColor,
                                     fontSize: 16,
+                                    fontFamily: "Inter"
                                   ),
                                 ),
                               ),

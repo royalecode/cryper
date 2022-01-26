@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,10 +35,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 50),
                             TextField(
                                 textInputAction: TextInputAction.next,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: false,
-                                decoration: const InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                     filled: true,
                                     fillColor: Color(0xFF2A2F45),
                                     border: OutlineInputBorder(
@@ -46,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: 'Name',
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle: hintStyle),
                                 onChanged: (value) {
                                   setState(() {
                                     _name = value.trim();
@@ -56,11 +59,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             TextField(
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.emailAddress,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                     errorText: isEmail(_email),
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                     filled: true,
                                     fillColor: Color(0xFF2A2F45),
                                     border: const OutlineInputBorder(
@@ -71,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: "Email",
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle: hintStyle),
                                 onChanged: (value) {
                                   setState(() {
                                     _email = value.trim();
@@ -80,11 +83,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 20),
                             TextField(
                                 textInputAction: TextInputAction.next,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     errorText: validatePassword(_password),
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                     filled: true,
                                     fillColor: Color(0xFF2A2F45),
                                     border: const OutlineInputBorder(
@@ -95,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: "Password",
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle: hintStyle),
                                 onChanged: (value) {
                                   setState(() {
                                     _password = value.trim();
@@ -104,11 +107,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 20),
                             TextField(
                                 textInputAction: TextInputAction.done,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     errorText: confirmPassword(_confirmPassword),
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                     filled: true,
                                     fillColor: Color(0xFF2A2F45),
                                     border: const OutlineInputBorder(
@@ -119,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: "Confirm Password",
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle: hintStyle),
                                 onChanged: (value) {
                                   setState(() {
                                     _confirmPassword = value.trim();
@@ -138,6 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 15),
                             Container(
                                 child: SizedBox(
+                                  height: 44,
                                   width: double.maxFinite,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(

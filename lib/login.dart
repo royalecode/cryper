@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cryper/components/mainButton.dart';
+import 'package:cryper/constantes_app.dart';
 import 'package:cryper/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,12 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextField(
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.emailAddress,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   errorText: isEmail(_email),
                                   contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 10.0),
+                                      vertical: 10.0, horizontal: 15.0),
                                   filled: true,
                                   fillColor: Color(0xFF2A2F45),
                                   border: const OutlineInputBorder(
@@ -50,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     //borderSide: const BorderSide(),
                                   ),
                                   hintText: 'Email',
-                                  hintStyle: TextStyle(color: Colors.white),
+                                  hintStyle: hintStyle,
                                 ),
                                 onChanged: (value) {
                                   setState(() {
@@ -60,11 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 20),
                             TextField(
                                 textInputAction: TextInputAction.done,
-                                style: TextStyle(color: Colors.white),
+                                style: fieldStyle,
                                 obscureText: true,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 10.0),
+                                        vertical: 10.0, horizontal: 15.0),
                                     filled: true,
                                     fillColor: Color(0xFF2A2F45),
                                     border: OutlineInputBorder(
@@ -75,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: "Password",
-                                    hintStyle: TextStyle(color: Colors.white)),
+                                    hintStyle: hintStyle),
                                 onChanged: (value) {
                                   setState(() {
                                     _password = value.trim();
@@ -94,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 15),
                             Container(
                                 child: SizedBox(
+                                  height: 44,
                               width: double.maxFinite,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(

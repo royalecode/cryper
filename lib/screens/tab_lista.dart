@@ -89,20 +89,18 @@ class _TabLista extends State<TabLista> {
                         )
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 15,),
                     TextField(
                       controller: searchController,
                       autofocus: false,
                       textAlignVertical: TextAlignVertical.center,
-                      style:TextStyle(
-                        color: whiteColor.withOpacity(0.5),
-                      ),
+                      style:fieldStyle,
                       decoration: InputDecoration(
                         hintText: 'Search by name',
-                        hintStyle: TextStyle(color: whiteColor.withOpacity(0.5)),
-                        suffixIcon: Icon(CupertinoIcons.search,color: whiteColor.withOpacity(0.5)),
+                        hintStyle: hintStyle,
+                        suffixIcon: Icon(Icons.search,color: hintColor),
                         isCollapsed: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 0,horizontal: 12),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                         fillColor: lightColor,
                         filled: true,
                         border: OutlineInputBorder(
