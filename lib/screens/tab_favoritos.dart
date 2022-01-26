@@ -11,8 +11,6 @@ import 'package:flutter_svg/svg.dart';
 
 class TabFavoritos extends StatefulWidget {
 
-
-
   const TabFavoritos({Key? key,}) : super(key: key);
 
   @override
@@ -36,6 +34,9 @@ class _TabFavoritos extends State<TabFavoritos> {
       });
     });
 
+    print('hola aqui la moneda si es favorite o no');
+    print(_checkIsFavorite("cardano"));
+    _checkIsFavorite("bitcoin").then((value) => print(value));
     _getUserFavoriteCoins();
 
     super.initState();
@@ -122,5 +123,19 @@ void compareCoinsAndAddToFavorites(){
           _strArr = List<String>.from(value.data()!["coins"]);
       });
     });
+  }
+
+  Future<bool> _checkIsFavorite(String ?coin) async {
+     bool exists = false;
+     await FirebaseFirestore.instance
+        .collection('UserData')
+        .doc((await FirebaseAuth.instance.currentUser!).uid)
+        .get()
+        .then((value) {
+            if (List<String>.from(value.data()!["coins"]).contains(coin)) {
+              exists = true;
+            }
+    });
+    return Future<bool>.value(exists);
   }
 }
