@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cryper/ResetScreen.dart';
 import 'package:cryper/components/mainButton.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/register.dart';
@@ -16,8 +17,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final auth = FirebaseAuth.instance;
-  String _email = '', _password = '', errorMessage = '';
-  bool checkEmail = false, _errorBool = false;
+  String _email = '',
+      _password = '',
+      errorMessage = '';
+  bool checkEmail = false,
+      _errorBool = false;
 
   @override
   Widget build(BuildContext ctxt) {
@@ -48,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   border: const OutlineInputBorder(
                                     // width: 0.0 produces a thin "hairline" border
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
+                                    BorderRadius.all(Radius.circular(10.0)),
                                     borderSide: BorderSide.none,
                                     //borderSide: const BorderSide(),
                                   ),
@@ -98,44 +102,61 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                                 child: SizedBox(
                                   height: 44,
-                              width: double.maxFinite,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF586AF8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                  width: double.maxFinite,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF586AF8),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10.0),
+                                        ),
+                                        textStyle: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      loginAction();
+                                    },
+                                    child: Text('Login'),
+                                  ),
+                                )),
+                            const SizedBox(height: 20),
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        ctxt,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Register now",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF586AF8)),
                                     ),
-                                    textStyle: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold)),
-                                onPressed: () {
-                                  loginAction();
-                                },
-                                child: Text('Login'),
-                              ),
-                            )),
-                            const SizedBox(height: 30),
-                            const Text(
-                              "Don't have an account?",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  ctxt,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegisterScreen()),
-                                );
-                              },
-                              child: const Text(
-                                "Register",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF586AF8)),
-                              ),
-                            )
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        ctxt,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ResetScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Forgot password?",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ])
                           ],
                         ))))));
   }
