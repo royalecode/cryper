@@ -10,6 +10,9 @@ import 'package:flutter/services.dart';
 
 class TabLista extends StatefulWidget {
 
+
+
+
   const TabLista({Key? key}) : super(key: key);
 
   @override
@@ -17,11 +20,21 @@ class TabLista extends StatefulWidget {
 }
 
 class _TabLista extends State<TabLista> {
-
+  
   var searchController = TextEditingController();
   List<Coin> coinsSearchList = [];
   List<Coin> coinlist = [];
 
+  void updateCoinList(String val) {
+    coinsSearchList.clear();
+
+    coinlist.forEach((coin) {
+      if (coin.name!.toLowerCase().contains(val.toLowerCase())) {
+        coinsSearchList.add(coin);
+      }
+    });
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -52,8 +65,17 @@ class _TabLista extends State<TabLista> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset("assets/images/logoCryper.svg",width: 35,height: 35,),
-                          SizedBox(width: 5,),
+                          Hero(
+                            tag: "logo",
+                            child: SvgPicture.asset(
+                              "assets/images/logoCryper.svg",
+                              width: 35,
+                              height: 35,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
                         ],
                       ),
                     ),
@@ -63,15 +85,11 @@ class _TabLista extends State<TabLista> {
                       children: [
                         Text(
                           "Top Coins",
-                          style: TextStyle(
-                            color: whiteColor,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.headline2,
                         )
                       ],
                     ),
-                    SizedBox(height: 15,),
+                    SizedBox(height: 10,),
                     TextField(
                       controller: searchController,
                       autofocus: false,
@@ -84,24 +102,16 @@ class _TabLista extends State<TabLista> {
                         hintStyle: TextStyle(color: whiteColor.withOpacity(0.5)),
                         suffixIcon: Icon(CupertinoIcons.search,color: whiteColor.withOpacity(0.5)),
                         isCollapsed: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                        contentPadding: EdgeInsets.symmetric(vertical: 0,horizontal: 12),
                         fillColor: lightColor,
                         filled: true,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide.none,
                         ),
                       ),
                       onChanged: (val){
-                        coinsSearchList.clear();
-
-                        coinlist.forEach((coin) {
-                          if(coin.name!.toLowerCase().contains(val.toLowerCase())){
-                            coinsSearchList.add(coin);
-                          }
-
-                        });
-                        setState(() {});
+                        updateCoinList(val);
                       },
                     ),
                 SizedBox(height: 15,),
@@ -110,6 +120,7 @@ class _TabLista extends State<TabLista> {
                           coinsSearchList.length != 0 ||
                               searchController.text.isNotEmpty
                               ? ListView.builder(
+                              physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: coinsSearchList.length,
@@ -118,6 +129,7 @@ class _TabLista extends State<TabLista> {
                                   coin: coinsSearchList[index], remove: false,);
                               })
                               : ListView.builder(
+                              physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: coinlist.length,

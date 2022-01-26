@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cryper/Authenticate.dart';
 import 'package:cryper/AuthenticationProvider.dart';
+import 'package:cryper/constantes_app.dart';
 import 'package:cryper/login.dart';
 import 'package:cryper/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
@@ -14,6 +15,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 void main() async {
@@ -28,6 +30,68 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Cryper app',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+        textTheme: const TextTheme(
+          headline1: TextStyle(color: Color(0xFFffffff),
+              fontSize: 36.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          headline2: TextStyle(color: Color(0xFFffffff),
+              fontSize: 29.0,
+              fontWeight: FontWeight.w800,
+              fontFamily: "Inter"),
+          headline4: TextStyle(color: Color(0xFFffffff),
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Inter"),
+          headline5: TextStyle(color: Color(0xFFffffff),
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Inter"),
+          subtitle1: TextStyle(color: Color(0xFF747E98),
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          subtitle2: TextStyle(color: Color(0xFF747E98),
+              fontSize: 12.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+          bodyText1: TextStyle(color: Color(0xFF747E98),
+              fontSize: 14.0,
+              fontWeight: FontWeight.normal,
+              fontFamily: "Inter"),
+          bodyText2: TextStyle(color: Color(0xFFffffff),
+              fontSize: 12.0,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Inter"),
+        ),
+      ),
+      home: AnimatedSplashScreen(
+        nextScreen: TabScreen(),
+        splash: Center(
+          child: Hero(
+            tag: "logo",
+            child: SvgPicture.asset("assets/images/logoCryper.svg"),
+          ),
+        ),
+        duration: 1000,
+        pageTransitionType: PageTransitionType.fade,
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: Color(0xFF191D2D),
+      ),
     return MultiProvider(
         providers: [
           Provider<AuthenticationProvider?>(
