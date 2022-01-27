@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/api/api_interface.dart';
-import 'package:cryper/components/coinList.dart';
+import 'package:cryper/components/CoinList.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,9 +34,6 @@ class _TabFavoritos extends State<TabFavoritos> {
       });
     });
 
-    print('hola aqui la moneda si es favorite o no');
-    print(_checkIsFavorite("cardano"));
-    _checkIsFavorite("bitcoin").then((value) => print(value));
     _getUserFavoriteCoins();
 
     super.initState();
@@ -85,6 +82,7 @@ class _TabFavoritos extends State<TabFavoritos> {
                   SizedBox(height: 20,),
                   Expanded(
                     child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemCount: favoriteCoins.length,
@@ -121,17 +119,4 @@ void compareCoinsAndAddToFavorites(){
     });
   }
 
-  Future<bool> _checkIsFavorite(String ?coin) async {
-     bool exists = false;
-     await FirebaseFirestore.instance
-        .collection('UserData')
-        .doc((await FirebaseAuth.instance.currentUser!).uid)
-        .get()
-        .then((value) {
-            if (List<String>.from(value.data()!["coins"]).contains(coin)) {
-              exists = true;
-            }
-    });
-    return Future<bool>.value(exists);
-  }
 }

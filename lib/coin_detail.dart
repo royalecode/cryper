@@ -1,15 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/api/api_interface.dart';
 import 'package:cryper/components/PriceChart.dart';
-import 'package:cryper/components/mainButton.dart';
+import 'package:cryper/components/MainButton.dart';
+import 'package:cryper/components/StatRow.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
 import 'package:cryper/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:html/parser.dart';
@@ -39,12 +43,14 @@ class _CoinDetail extends State<CoinDetail> {
   late TrackballBehavior _trackballBehavior;
   final Coin coin;
   var formatter = NumberFormat('#,###,###.####');
+  var numberCompacts = NumberFormat.compact();
   List dataDay = [];
   List dataWeek = [];
   List dataMonth = [];
   List dataYear = [];
   List dataAll = [];
   List<_PriceData> data = [];
+  bool? isFavorite;
 
   void updateData(List data, int time) {
     setState(() {
@@ -54,6 +60,64 @@ class _CoinDetail extends State<CoinDetail> {
               _PriceData(DateTime.fromMicrosecondsSinceEpoch(e[0]), e[1]))
           .toList();
     });
+  }
+
+  Widget favoriteWidget(){
+    if(isFavorite == null){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+        ],
+      );
+    }
+    if (isFavorite!){
+      return OutlinedButton(
+        onPressed: () {
+          setState(() {
+            isFavorite = null;
+          });
+          removeFromArray(coin.id).then((value) {
+            setState(() {
+              isFavorite = false;
+            });
+          });
+        },
+        style: OutlinedButton.styleFrom(
+            side: BorderSide(color: lightBlueColor.withOpacity(.4), width: 2.2),
+            primary: whiteColor,
+            shape: new RoundedRectangleBorder(
+              borderRadius:
+              new BorderRadius.circular(10.0),
+            ),
+            textStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold)),
+        child: Text("Unfollow"),
+      );
+    }
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          isFavorite = null;
+        });
+        appendToArray(coin.id).then((value) {
+          setState(() {
+            isFavorite = true;
+          });
+        });      },
+      style: ElevatedButton.styleFrom(
+          elevation: 0,
+          primary: Color(0xFF586AF8),
+          shape: new RoundedRectangleBorder(
+            borderRadius:
+            new BorderRadius.circular(10.0),
+          ),
+          textStyle: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold)),
+      child: Text("Follow"),
+    );
   }
 
   @override
@@ -94,6 +158,13 @@ class _CoinDetail extends State<CoinDetail> {
       dataAll = data;
       setState(() {});
     });
+
+    _checkIsFavorite(coin.id).then((value) {
+      setState(() {
+        isFavorite = value;
+      });
+    });
+
   }
 
   _CoinDetail({required this.coin});
@@ -112,11 +183,11 @@ class _CoinDetail extends State<CoinDetail> {
       // backgroundColor: Color(0xFF000000),
       body: Column(
         children: [
-          Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-            child: Expanded(
-              flex: 0,
+          Expanded(
+            flex: 0,
+            child: Padding(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
               child: Row(
                 children: [
                   Padding(
@@ -298,23 +369,29 @@ class _CoinDetail extends State<CoinDetail> {
                                     child: SfCartesianChart(
                                         trackballBehavior: TrackballBehavior(
                                           builder: (BuildContext context,
-                                              TrackballDetails
-                                                  trackballDetails) {
-                                            return Text(
-                                              "${trackballDetails.point?.y}",
-                                              style: TextStyle(
-                                                fontSize: 0,
+                                              TrackballDetails td) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFF323852),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(6.0)),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    "${formatter.format(td.point?.y)} \$"),
                                               ),
                                             );
                                           },
-                                          // Enables the trackball
+                                          // Enables the trackbal
                                           enable: true,
                                           activationMode:
                                               ActivationMode.singleTap,
                                           tooltipSettings: InteractiveTooltip(
                                               enable: true,
-                                              color: Color(0x00FFFFFF),
-                                              borderColor: Color(0x00FFFFFF)),
+                                              color: Color(0xFF323852),
+                                              borderColor: Color(0xFF323852)),
                                           lineColor: Color(0x30FFFFFF),
                                           lineDashArray: [6, 4],
                                           lineWidth: 2,
@@ -325,7 +402,10 @@ class _CoinDetail extends State<CoinDetail> {
                                           isVisible: false,
                                         ),
                                         primaryYAxis: NumericAxis(
-                                            isVisible: false, borderWidth: 0),
+                                            rangePadding:
+                                                ChartRangePadding.additional,
+                                            isVisible: false,
+                                            borderWidth: 0),
                                         tooltipBehavior:
                                             TooltipBehavior(enable: true),
                                         series: <
@@ -340,8 +420,8 @@ class _CoinDetail extends State<CoinDetail> {
                                                 begin: Alignment.topCenter,
                                                 end: Alignment.bottomCenter,
                                                 colors: <Color>[
-                                                  Color(0x22F77C3F),
-                                                  Color(0x00000000)
+                                                  Color(0x45F77C3F),
+                                                  Color(0x00F77C3F)
                                                 ],
                                               ),
                                               dataSource: data,
@@ -404,7 +484,7 @@ class _CoinDetail extends State<CoinDetail> {
                                               style: getStyle(TIME_1Y))),
                                       TextButton(
                                           style: TextButton.styleFrom(
-                                              minimumSize: Size(40, 30),
+                                              minimumSize: Size(25, 30),
                                               padding: EdgeInsets.zero),
                                           onPressed: () {
                                             updateData(dataAll, TIME_ALL);
@@ -515,21 +595,9 @@ class _CoinDetail extends State<CoinDetail> {
                     child: SizedBox(
                       width: double.maxFinite,
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 20, left: 30, right: 30),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            print("-");
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF586AF8),
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(10.0),
-                              ),
-                              textStyle: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          child: Text("Follow"),
-                        ),
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 30, right: 30),
+                          child: favoriteWidget()
                       ),
                     ),
                   )
@@ -554,4 +622,40 @@ class _PriceData {
 
   final DateTime date;
   final double price;
+}
+
+formatNumber(dynamic num) {
+  return NumberFormat.compact().format(double.tryParse(num.toString()) ?? 0);
+}
+
+Future<bool> _checkIsFavorite(String? coin) async {
+  bool exists = false;
+  await FirebaseFirestore.instance
+      .collection('UserData')
+      .doc((await FirebaseAuth.instance.currentUser!).uid)
+      .get()
+      .then((value) {
+    if (List<String>.from(value.data()!["coins"]).contains(coin)) {
+      exists = true;
+    }
+  });
+  return Future<bool>.value(exists);
+}
+
+Future<void> appendToArray(String? coin) async {
+  FirebaseFirestore.instance
+      .collection('UserData')
+      .doc((await FirebaseAuth.instance.currentUser!).uid)
+      .update({
+    'coins': FieldValue.arrayUnion([coin]),
+  });
+}
+
+Future<void> removeFromArray(String? coin) async {
+  FirebaseFirestore.instance
+      .collection('UserData')
+      .doc((await FirebaseAuth.instance.currentUser!).uid)
+      .update({
+    'coins': FieldValue.arrayRemove([coin]),
+  });
 }

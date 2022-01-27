@@ -242,25 +242,6 @@ class CoinList extends StatelessWidget {
         });
   }
 
-
-  Future<void> appendToArray(String ?coin) async {
-    FirebaseFirestore.instance
-        .collection('UserData')
-        .doc((await FirebaseAuth.instance.currentUser!).uid)
-        .update({
-            'coins': FieldValue.arrayUnion([coin]),
-    });
-  }
-
-  Future<void> removeFromArray(String ?coin) async {
-    FirebaseFirestore.instance
-        .collection('UserData')
-        .doc((await FirebaseAuth.instance.currentUser!).uid)
-        .update({
-      'coins': FieldValue.arrayRemove([coin]),
-    });
-  }
-
  /* save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, json.encode(value));
