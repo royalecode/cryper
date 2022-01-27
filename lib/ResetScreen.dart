@@ -21,7 +21,7 @@ class ResetScreen extends StatelessWidget {
                       children: <Widget>[
                         Row(children: <Widget>[
                           IconButton(
-                              icon: Icon(Icons.arrow_back_ios_new),
+                              icon: Icon(Icons.arrow_back),
                               padding: EdgeInsets.fromLTRB(0,0,15,0),
                               constraints: BoxConstraints(),
                               color: Colors.white,
@@ -44,7 +44,7 @@ class ResetScreen extends StatelessWidget {
                             fontSize: 15,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 25),
                         TextField(
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
@@ -69,24 +69,31 @@ class ResetScreen extends StatelessWidget {
                             _email = value;
                           },
                         ),
-                        const SizedBox(height: 15),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF586AF8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                        const SizedBox(height: 25),
+                        Container(
+                            child: SizedBox(
+                              height: 44,
+                              width: double.maxFinite,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF586AF8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10.0),
+                                    ),
+                                    textStyle: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                onPressed: () async {
+                                  if (_email != '') {
+                                    await FirebaseAuth.instance
+                                        .sendPasswordResetEmail(email: _email);
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: Text('Send email'),
                               ),
-                              textStyle: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          onPressed: () async {
-                            if (_email != '') {
-                              await FirebaseAuth.instance
-                                  .sendPasswordResetEmail(email: _email);
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: Text('Send email'),
-                        )
+                            )),
                       ],
                     )))));
   }
