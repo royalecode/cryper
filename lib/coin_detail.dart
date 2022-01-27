@@ -419,14 +419,15 @@ class _CoinDetail extends State<CoinDetail> {
                             //COIN ABOUT
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 8.0, left: 12, right: 12),
+                                  top: 25.0, left: 12, right: 12),
                               child: Column(
                                 children: [
+
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 8,),
                                         child: Text(
                                           "About ${coin.name}",
                                           style: Theme.of(context)
@@ -441,17 +442,59 @@ class _CoinDetail extends State<CoinDetail> {
                                       Flexible(
                                         child: Padding(
                                           padding:
-                                              const EdgeInsets.only(bottom: 15),
-                                          child: Text(
+                                          const EdgeInsets.only(bottom: 15),
+                                          child: ReadMoreText(
                                             coinDesc,
+                                            trimMode: TrimMode.Line,
+                                            trimLines: 5,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1,
                                             textAlign: TextAlign.justify,
+                                            lessStyle: TextStyle(color: lightBlueColor),
+                                            moreStyle: TextStyle(color: lightBlueColor),
+                                            trimCollapsedText: "...read more",
+                                            trimExpandedText: "Show less",
+                                            delimiter: " ",
                                           ),
                                         ),
                                       )
                                     ],
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10, top: 10),
+                                        child: Text(
+                                          "${coin.name} stats",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  StatRow(
+                                      label: "Market cap",
+                                      value: formatNumber(coin.marketCap),
+                                      iconData: Icons.equalizer),
+                                  StatRow(
+                                      label: "Volume",
+                                      value: formatNumber(coin.totalVolume),
+                                      iconData: Icons.bubble_chart),
+                                  StatRow(
+                                      label: "Circulating supply",
+                                      value:
+                                          formatNumber(coin.circulatingSupply),
+                                      iconData: Icons.data_usage),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: StatRow(
+                                        label: "Popularity",
+                                        value: "#${coin.marketCapRank}",
+                                        iconData: Icons.auto_awesome),
                                   ),
                                 ],
                               ),
