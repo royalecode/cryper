@@ -5,7 +5,7 @@ import 'package:cryper/components/MainButton.dart';
 import 'package:cryper/components/StatRow.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
-import 'package:cryper/register.dart';
+import 'package:cryper/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';

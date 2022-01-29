@@ -49,6 +49,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.4.43
   html: ^0.15.0
   readmore: ^2.1.0
+  google_sign_in: ^5.2.3
 
 dev_dependencies:
   flutter_test:
