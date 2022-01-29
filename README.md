@@ -1,5 +1,5 @@
 # cryper
 
-Artur Alcoverro Pastò
-Edmon Bosch Bosch
+Artur Alcoverro Pastò\
+Edmon Bosch Bosch\
 Joan Ballber Mayans
