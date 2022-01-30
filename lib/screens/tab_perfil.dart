@@ -3,30 +3,9 @@ import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-const int SYSTEM_THEME = 1;
-const int DARK_THEME = 2;
-const int LIGHT_THEME = 3;
-
-Future<int> getSelectedTheme() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  if (prefs.containsKey("themeMode")) {
-    print(prefs.getInt("themeMode"));
-    if (prefs.getInt("themeMode") == SYSTEM_THEME) {
-      return SYSTEM_THEME;
-    }
-    if (prefs.getInt("themeMode") == DARK_THEME) {
-      return DARK_THEME;
-    }
-    if (prefs.getInt("themeMode") == LIGHT_THEME) {
-      return LIGHT_THEME;
-    }
-  }
-  prefs.setInt("themeMode", SYSTEM_THEME);
-  return SYSTEM_THEME;
-}
-
+import 'package:cryper/theme_mode.dart';
+import 'package:provider/provider.dart';
+import '../CustomColorScheme.dart';
 
 class TabPerfil extends StatefulWidget {
   const TabPerfil({Key? key}) : super(key: key);
@@ -40,7 +19,7 @@ class _TabPerfil extends State<TabPerfil> {
 
   @override
   void initState() {
-    getSelectedTheme().then((value) => {
+    ThemeModeProvider().getSelectedTheme().then((value) => {
           setState(() {
             selectedTheme = value;
           })
@@ -50,13 +29,14 @@ class _TabPerfil extends State<TabPerfil> {
 
   Icon getThemeIcon(int theme){
     if(theme == (selectedTheme ?? 0)){
-      return Icon(Icons.check_circle_rounded, color: Theme.of(context).colorScheme.primary);
+      return Icon(Icons.check_circle_rounded, color: Theme.of(context).colorScheme.primary, size: 20);
     }
-    return const Icon(Icons.circle_outlined, color: Color(0xFF747E98), size: 20,);
+    return const Icon(Icons.circle_outlined, color: Color(0xFF747E98), size: 20);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(selectedTheme);
     return Scaffold(
         // backgroundColor: primaryColor,
         body: SafeArea(
@@ -91,28 +71,48 @@ class _TabPerfil extends State<TabPerfil> {
                                   style: TextStyle(
                                       fontSize: 14, fontFamily: "Inter")),
                               leading: getThemeIcon(DARK_THEME),
+                              onTap: (){
+                                final provider = Provider.of<ThemeModeProvider>(context, listen: false);
+                                provider.setSelectedTheme(ThemeMode.dark);
+                                Navigator.pop(context);
+                                setState(() {
+                                  selectedTheme = DARK_THEME;
+                                });
+                              },
                             ),
                             ListTile(
                               title: const Text("Light",
                                   style: TextStyle(
                                       fontSize: 14, fontFamily: "Inter")),
                               leading: getThemeIcon(LIGHT_THEME),
+                              onTap: (){
+                                final provider = Provider.of<ThemeModeProvider>(context, listen: false);
+                                provider.setSelectedTheme(ThemeMode.light);
+                                Navigator.pop(context);
+                                setState(() {
+                                  selectedTheme = LIGHT_THEME;
+                                });
+                              },
                             ),
                             ListTile(
                               title: const Text("System",
                                   style: TextStyle(
                                       fontSize: 14, fontFamily: "Inter")),
                               leading: getThemeIcon(SYSTEM_THEME),
+                              onTap: (){
+                                final provider = Provider.of<ThemeModeProvider>(context, listen: false);
+                                provider.setSelectedTheme(ThemeMode.system);
+                                Navigator.pop(context);
+                                setState(() {
+                                  selectedTheme = SYSTEM_THEME;
+                                });
+                              },
                             ),
                           ],
                         );
                       },
                     );
                   }),
-              SettingsRow(
-                  iconData: Icons.payments_outlined,
-                  label: "Currency",
-                  onpress: () {}),
               SettingsRow(
                   iconData: Icons.logout,
                   label: "Logout",
