@@ -1,4 +1,5 @@
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+platform :ios, '10.0'
 
  project 'Runner', {
 
@@ -24,7 +25,6 @@ ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
  flutter_ios_podfile_setup
 
- platform :ios, '10.0'
 
  target 'Runner' do
    use_frameworks!
