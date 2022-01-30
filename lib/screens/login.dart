@@ -1,14 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cryper/ResetScreen.dart';
+import 'package:cryper/screens/ResetScreen.dart';
+import 'package:cryper/components/mainButton.dart';
 import 'package:cryper/CustomColorScheme.dart';
 import 'package:cryper/constantes_app.dart';
-import 'package:cryper/register.dart';
+import 'package:cryper/screens/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,8 +19,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final auth = FirebaseAuth.instance;
-  String _email = '', _password = '', errorMessage = '';
-  bool checkEmail = false, _errorBool = false;
+  final googleSignIn = GoogleSignIn();
+  String _email = '',
+      _password = '',
+      errorMessage = '';
+  bool checkEmail = false,
+      _errorBool = false;
 
   @override
   Widget build(BuildContext ctxt) {
@@ -211,4 +217,23 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
+
+  /*Future<bool> loginActionGoogleSignin() async {
+    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+      AuthCredential credential = GoogleAuthProvider.credential(idToken: googleSignInAuthentication.idToken,
+              accessToken: googleSignInAuthentication.accessToken);
+
+      UserCredential result = await auth.signInWithCredential(credential);
+
+      User? user = await auth.currentUser;
+      print(user!.uid);
+      return Future.value(true);
+    }
+
+    return Future.value(false);
+  }*/
 }
