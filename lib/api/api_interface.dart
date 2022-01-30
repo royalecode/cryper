@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cryper/models/coin.dart';
 import '../constantes_app.dart';
 import 'package:http/http.dart' as http;
-import 'package:cryper/coin_detail.dart';
+import 'package:cryper/screens/coin_detail.dart';
 
 class ApiInterface {
   Future<List<Coin>> getCoinsList() async {

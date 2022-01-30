@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/api/api_interface.dart';
-import 'package:cryper/components/PriceChart.dart';
-import 'package:cryper/components/MainButton.dart';
-import 'package:cryper/components/StatRow.dart';
+import 'package:cryper/components/main_button.dart';
+import 'package:cryper/components/stat_row.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
 import 'package:cryper/screens/register.dart';
@@ -17,7 +16,7 @@ import 'package:readmore/readmore.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:html/parser.dart';
-import 'package:cryper/CustomColorScheme.dart';
+import 'package:cryper/custom_color_scheme.dart';
 
 const int TIME_1H = 1;
 const int TIME_1D = 2;

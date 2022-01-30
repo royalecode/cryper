@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/api/api_interface.dart';
-import 'package:cryper/components/CoinList.dart';
+import 'package:cryper/components/coin_list.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/models/coin.dart';
 import 'package:firebase_auth/firebase_auth.dart';

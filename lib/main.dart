@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:cryper/Authenticate.dart';
-import 'package:cryper/AuthenticationProvider.dart';
+import 'package:cryper/authenticate.dart';
+import 'package:cryper/authentication_provider.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/login.dart';
 import 'package:cryper/screens/register.dart';

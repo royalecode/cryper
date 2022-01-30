@@ -1,8 +1,8 @@
-import 'package:cryper/CustomColorScheme.dart';
+import 'package:cryper/custom_color_scheme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../CustomColorScheme.dart';
+import '../custom_color_scheme.dart';
 import '../constantes_app.dart';
 
 class ResetScreen extends StatelessWidget {

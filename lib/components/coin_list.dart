@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:cryper/coin_detail.dart';
+import 'package:cryper/screens/coin_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryper/models/coin.dart';
 import 'package:firebase_auth/firebase_auth.dart';

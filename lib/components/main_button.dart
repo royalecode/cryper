@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cryper/home.dart';
 import 'package:cryper/screens/login.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
 import 'package:firebase_auth/firebase_auth.dart';

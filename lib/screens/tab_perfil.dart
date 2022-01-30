@@ -1,11 +1,11 @@
-import 'package:cryper/components/SettingsRow.dart';
+import 'package:cryper/components/settings_row.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cryper/theme_mode.dart';
 import 'package:provider/provider.dart';
-import '../CustomColorScheme.dart';
+import '../custom_color_scheme.dart';
 
 class TabPerfil extends StatefulWidget {
   const TabPerfil({Key? key}) : super(key: key);

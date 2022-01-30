@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cryper/CustomColorScheme.dart';
+import 'package:cryper/custom_color_scheme.dart';
 
 var primaryColor = const Color(0xFF191D2D);
 var accentColor = const Color(0xFFF77C3F);

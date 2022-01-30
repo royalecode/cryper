@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cryper/screens/ResetScreen.dart';
-import 'package:cryper/components/mainButton.dart';
-import 'package:cryper/CustomColorScheme.dart';
+import 'package:cryper/screens/reset_screen.dart';
+import 'package:cryper/components/main_button.dart';
+import 'package:cryper/custom_color_scheme.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';

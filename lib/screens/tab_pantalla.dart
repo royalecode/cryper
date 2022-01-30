@@ -2,7 +2,7 @@ import 'package:cryper/constantes_app.dart';
 import 'package:cryper/screens/tab_favoritos.dart';
 import 'package:cryper/screens/tab_lista.dart';
 import 'package:cryper/screens/tab_perfil.dart';
-import 'package:cryper/CustomColorScheme.dart';
+import 'package:cryper/custom_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
