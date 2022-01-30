@@ -15,11 +15,8 @@ class MyRoute extends MaterialPageRoute {
 }
 
 class CoinList extends StatelessWidget {
-
   final Coin coin;
-
   bool remove;
-
   var formatter = NumberFormat('#,###,###.####');
 
   CoinList({Key? key, required this.coin, required this.remove})
@@ -49,7 +46,7 @@ class CoinList extends StatelessWidget {
       },
       child: Card(
         elevation: 0,
-        color: primaryColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 7),
           padding: EdgeInsets.symmetric(horizontal: 5, vertical: 7),
@@ -94,11 +91,7 @@ class CoinList extends StatelessWidget {
                                 type: MaterialType.transparency,
                                 child: Text(
                                   "${formatter.format(coin.currentPrice)} \$",
-                                  style: TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 16,
-                                    fontFamily: "Inter"
-                                  ),
+                                  style:Theme.of(context).textTheme.headline6,
                                 ),
                               ),
                             ),
@@ -172,7 +165,7 @@ class CoinList extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10)),
-                          color: primaryColor,
+                          // color: primaryColor,
                         ),
                         padding: EdgeInsets.symmetric(vertical: 17),
                         width: double.infinity,
@@ -195,7 +188,7 @@ class CoinList extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10)),
-                          color: primaryColor,
+                          // color: primaryColor,
                         ),
                         padding: EdgeInsets.symmetric(vertical: 17),
                         width: double.infinity,
@@ -219,7 +212,7 @@ class CoinList extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
-                        color: primaryColor,
+                        // color: primaryColor,
                       ),
                       padding: EdgeInsets.symmetric(vertical: 17),
                       width: double.infinity,

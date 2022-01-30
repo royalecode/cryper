@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cryper/ResetScreen.dart';
-import 'package:cryper/components/mainButton.dart';
+import 'package:cryper/CustomColorScheme.dart';
 import 'package:cryper/constantes_app.dart';
 import 'package:cryper/register.dart';
 import 'package:cryper/screens/tab_pantalla.dart';
@@ -17,16 +17,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final auth = FirebaseAuth.instance;
-  String _email = '',
-      _password = '',
-      errorMessage = '';
-  bool checkEmail = false,
-      _errorBool = false;
+  String _email = '', _password = '', errorMessage = '';
+  bool checkEmail = false, _errorBool = false;
 
   @override
   Widget build(BuildContext ctxt) {
     return Scaffold(
-        backgroundColor: Color(0xFF191D2D),
         body: Container(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -36,28 +32,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            SvgPicture.asset("assets/images/logoCryper.svg"),
+                            SvgPicture.asset(
+                              Theme.of(context).brightness == Brightness.light
+                                  ? "assets/images/logoCryperLight.svg"
+                                  : "assets/images/logoCryper.svg",
+                            ),
                             const SizedBox(height: 50),
                             TextField(
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.emailAddress,
-                                style: fieldStyle,
+                                style: getFieldStyle(context),
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   errorText: isEmail(_email),
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 10.0, horizontal: 15.0),
                                   filled: true,
-                                  fillColor: Color(0xFF2A2F45),
+                                  fillColor: Theme.of(context).colorScheme.fieldBackground,
                                   border: const OutlineInputBorder(
                                     // width: 0.0 produces a thin "hairline" border
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
+                                        BorderRadius.all(Radius.circular(10.0)),
                                     borderSide: BorderSide.none,
                                     //borderSide: const BorderSide(),
                                   ),
                                   hintText: 'Email',
-                                  hintStyle: hintStyle,
+                                  hintStyle: getHintStyle(context),
                                 ),
                                 onChanged: (value) {
                                   setState(() {
@@ -67,13 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 20),
                             TextField(
                                 textInputAction: TextInputAction.done,
-                                style: fieldStyle,
+                                style: getFieldStyle(context),
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 10.0, horizontal: 15.0),
                                     filled: true,
-                                    fillColor: Color(0xFF2A2F45),
+                                    fillColor: Theme.of(context).colorScheme.fieldBackground,
                                     border: OutlineInputBorder(
                                       // width: 0.0 produces a thin "hairline" border
                                       borderRadius: BorderRadius.all(
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //borderSide: const BorderSide(),
                                     ),
                                     hintText: "Password",
-                                    hintStyle: hintStyle),
+                                    hintStyle: getHintStyle(context)),
                                 onChanged: (value) {
                                   setState(() {
                                     _password = value.trim();
@@ -101,28 +101,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 15),
                             Container(
                                 child: SizedBox(
-                                  height: 44,
-                                  width: double.maxFinite,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFF586AF8),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10.0),
-                                        ),
-                                        textStyle: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold)),
-                                    onPressed: () {
-                                      loginAction();
-                                    },
-                                    child: Text('Login'),
-                                  ),
-                                )),
+                              height: 44,
+                              width: double.maxFinite,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary:
+                                        Theme.of(context).colorScheme.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    textStyle: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                onPressed: () {
+                                  loginAction();
+                                },
+                                child: Text('Login'),
+                              ),
+                            )),
                             const SizedBox(height: 20),
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -133,11 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 RegisterScreen()),
                                       );
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "Register now",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0xFF586AF8)),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
                                     ),
                                   ),
                                   TextButton(
@@ -149,11 +151,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ResetScreen()),
                                       );
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "Forgot password?",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                          color: Theme.of(context).colorScheme.onBackground),
                                     ),
                                   ),
                                 ])

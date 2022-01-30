@@ -17,6 +17,7 @@ import 'package:readmore/readmore.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:html/parser.dart';
+import 'package:cryper/CustomColorScheme.dart';
 
 const int TIME_1H = 1;
 const int TIME_1D = 2;
@@ -62,8 +63,8 @@ class _CoinDetail extends State<CoinDetail> {
     });
   }
 
-  Widget favoriteWidget(){
-    if(isFavorite == null){
+  Widget favoriteWidget() {
+    if (isFavorite == null) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,7 +72,7 @@ class _CoinDetail extends State<CoinDetail> {
         ],
       );
     }
-    if (isFavorite!){
+    if (isFavorite!) {
       return OutlinedButton(
         onPressed: () {
           setState(() {
@@ -84,16 +85,16 @@ class _CoinDetail extends State<CoinDetail> {
           });
         },
         style: OutlinedButton.styleFrom(
-            side: BorderSide(color: lightBlueColor.withOpacity(.4), width: 2.2),
+            side: BorderSide(
+                color: Theme.of(context).colorScheme.primary.withOpacity(.4),
+                width: 2.2),
             primary: whiteColor,
             shape: new RoundedRectangleBorder(
-              borderRadius:
-              new BorderRadius.circular(10.0),
+              borderRadius: new BorderRadius.circular(10.0),
             ),
-            textStyle: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold)),
-        child: Text("Unfollow"),
+            textStyle:
+                TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onBackground)),
+        child: Text("Unfollow", style: TextStyle(color: Theme.of(context).colorScheme.onBackground)),
       );
     }
     return ElevatedButton(
@@ -105,17 +106,16 @@ class _CoinDetail extends State<CoinDetail> {
           setState(() {
             isFavorite = true;
           });
-        });      },
+        });
+      },
       style: ElevatedButton.styleFrom(
           elevation: 0,
-          primary: Color(0xFF586AF8),
+          primary: Theme.of(context).colorScheme.primary,
           shape: new RoundedRectangleBorder(
-            borderRadius:
-            new BorderRadius.circular(10.0),
+            borderRadius: new BorderRadius.circular(10.0),
           ),
-          textStyle: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold)),
+          textStyle:
+              const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
       child: Text("Follow"),
     );
   }
@@ -164,14 +164,13 @@ class _CoinDetail extends State<CoinDetail> {
         isFavorite = value;
       });
     });
-
   }
 
   _CoinDetail({required this.coin});
 
   TextStyle getStyle(int timeId) {
     return TextStyle(
-      color: timeId == selectedTime ? accentColor : Colors.white,
+      color: timeId == selectedTime ? accentColor : Theme.of(context).colorScheme.onBackground,
       fontSize: 16,
     );
   }
@@ -179,7 +178,7 @@ class _CoinDetail extends State<CoinDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191D2D),
+      // backgroundColor: Color(0xFF191D2D),
       // backgroundColor: Color(0xFF000000),
       body: Column(
         children: [
@@ -196,7 +195,7 @@ class _CoinDetail extends State<CoinDetail> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onBackground,
                         icon: Icon(Icons.arrow_back)),
                   )
                 ],
@@ -372,7 +371,7 @@ class _CoinDetail extends State<CoinDetail> {
                                               TrackballDetails td) {
                                             return Container(
                                               decoration: BoxDecoration(
-                                                color: Color(0xFF323852),
+                                                color: Theme.of(context).colorScheme.backgroundVariant,
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(6.0)),
                                               ),
@@ -390,9 +389,10 @@ class _CoinDetail extends State<CoinDetail> {
                                               ActivationMode.singleTap,
                                           tooltipSettings: InteractiveTooltip(
                                               enable: true,
-                                              color: Color(0xFF323852),
-                                              borderColor: Color(0xFF323852)),
-                                          lineColor: Color(0x30FFFFFF),
+                                              color: Theme.of(context).colorScheme.backgroundVariant,
+                                              borderColor:Theme.of(context).colorScheme.backgroundVariant),
+                                          // lineColor: Color(0x30FFFFFF),
+                                          lineColor: Theme.of(context).colorScheme.chartLine,
                                           lineDashArray: [6, 4],
                                           lineWidth: 2,
                                         ),
@@ -502,12 +502,12 @@ class _CoinDetail extends State<CoinDetail> {
                                   top: 25.0, left: 12, right: 12),
                               child: Column(
                                 children: [
-
                                   Row(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            bottom: 8,),
+                                          bottom: 8,
+                                        ),
                                         child: Text(
                                           "About ${coin.name}",
                                           style: Theme.of(context)
@@ -522,7 +522,7 @@ class _CoinDetail extends State<CoinDetail> {
                                       Flexible(
                                         child: Padding(
                                           padding:
-                                          const EdgeInsets.only(bottom: 15),
+                                              const EdgeInsets.only(bottom: 15),
                                           child: ReadMoreText(
                                             coinDesc,
                                             trimMode: TrimMode.Line,
@@ -531,8 +531,14 @@ class _CoinDetail extends State<CoinDetail> {
                                                 .textTheme
                                                 .bodyText1,
                                             textAlign: TextAlign.justify,
-                                            lessStyle: TextStyle(color: lightBlueColor),
-                                            moreStyle: TextStyle(color: lightBlueColor),
+                                            lessStyle: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                            moreStyle: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
                                             trimCollapsedText: "...read more",
                                             trimExpandedText: "Show less",
                                             delimiter: " ",
@@ -541,12 +547,11 @@ class _CoinDetail extends State<CoinDetail> {
                                       )
                                     ],
                                   ),
-
                                   Row(
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10, top: 10),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 10, top: 10),
                                         child: Text(
                                           "${coin.name} stats",
                                           style: Theme.of(context)
@@ -591,14 +596,13 @@ class _CoinDetail extends State<CoinDetail> {
                 children: [
                   Container(
                     height: 85,
-                    color: lightColor,
+                    color: Theme.of(context).colorScheme.backgroundVariant,
                     child: SizedBox(
                       width: double.maxFinite,
                       child: Padding(
                           padding: const EdgeInsets.only(
                               top: 20, bottom: 20, left: 30, right: 30),
-                          child: favoriteWidget()
-                      ),
+                          child: favoriteWidget()),
                     ),
                   )
                 ],

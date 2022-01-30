@@ -8,17 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class TabFavoritos extends StatefulWidget {
-
-  const TabFavoritos({Key? key,}) : super(key: key);
+  const TabFavoritos({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _TabFavoritos createState() => _TabFavoritos();
 }
 
 class _TabFavoritos extends State<TabFavoritos> {
-
   List<Coin> coinlist = [];
 
   List<Coin> favoriteCoins = [];
@@ -37,75 +36,86 @@ class _TabFavoritos extends State<TabFavoritos> {
     _getUserFavoriteCoins();
 
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
     for (var i = 0; i < coinlist.length; i++) {
-      for(var j=0; j < _strArr.length;j++) {
+      for (var j = 0; j < _strArr.length; j++) {
         if (coinlist[i].id == _strArr[j]) {
           favoriteCoins.add(coinlist[i]);
         }
       }
     }
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: primaryColor,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: primaryColor,
+    // ));
     return Scaffold(
-        backgroundColor: primaryColor,
+        // backgroundColor: primaryColor,
         body: SafeArea(
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: [
+              // Container(
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       SvgPicture.asset(
+              //         Theme.of(context).brightness == Brightness.light
+              //             ? "assets/images/logoCryperLight.svg"
+              //             : "assets/images/logoCryper.svg",
+              //         width: 35,
+              //         height: 35,
+              //       ),
+              //       SizedBox(
+              //         width: 5,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 25,),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset("assets/images/logoCryper.svg",width: 35,height: 35,),
-                        SizedBox(width: 5,),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Your Coins",
-                        style: Theme.of(context).textTheme.headline2,
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20,),
-                  Expanded(
-                    child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: favoriteCoins.length,
-                        itemBuilder: (context, index) {
-                          return CoinList(
-                              coin: favoriteCoins[index],remove: true,);
-                        }),
-                  ),
+                  Text(
+                    "Your Coins",
+                    style: Theme.of(context).textTheme.headline2,
+                  )
                 ],
-              )
-          ),
-        )
-    );
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: favoriteCoins.length,
+                    itemBuilder: (context, index) {
+                      return CoinList(
+                        coin: favoriteCoins[index],
+                        remove: true,
+                      );
+                    }),
+              ),
+            ],
+          )),
+    ));
   }
-void compareCoinsAndAddToFavorites(){
-  for (var i = 0; i < coinlist.length; i++) {
-    for(var j=0; j < _strArr.length;j++) {
-      if (coinlist[i].id == _strArr[j]) {
-        favoriteCoins.add(coinlist[i]);
+
+  void compareCoinsAndAddToFavorites() {
+    for (var i = 0; i < coinlist.length; i++) {
+      for (var j = 0; j < _strArr.length; j++) {
+        if (coinlist[i].id == _strArr[j]) {
+          favoriteCoins.add(coinlist[i]);
+        }
       }
     }
   }
-}
 
   Future<void> _getUserFavoriteCoins() async {
     FirebaseFirestore.instance
@@ -114,9 +124,8 @@ void compareCoinsAndAddToFavorites(){
         .get()
         .then((value) {
       setState(() {
-          _strArr = List<String>.from(value.data()!["coins"]);
+        _strArr = List<String>.from(value.data()!["coins"]);
       });
     });
   }
-
 }

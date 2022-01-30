@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'CustomColorScheme.dart';
 import 'constantes_app.dart';
 
 class ResetScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class ResetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF191D2D),
+        // backgroundColor: Color(0xFF191D2D),
         body: Container(
             child: SingleChildScrollView(
                 child: Padding(
@@ -24,7 +24,7 @@ class ResetScreen extends StatelessWidget {
                               icon: Icon(Icons.arrow_back),
                               padding: EdgeInsets.fromLTRB(0,0,15,0),
                               constraints: BoxConstraints(),
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onBackground,
                               onPressed: () {
                                 Navigator.of(context).pop();
                               }),
@@ -48,13 +48,13 @@ class ResetScreen extends StatelessWidget {
                         TextField(
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          style: fieldStyle,
+                          style: getFieldStyle(context),
                           obscureText: false,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 15.0),
                             filled: true,
-                            fillColor: Color(0xFF2A2F45),
+                            fillColor: Theme.of(context).colorScheme.fieldBackground,
                             border: const OutlineInputBorder(
                               // width: 0.0 produces a thin "hairline" border
                               borderRadius:
@@ -63,7 +63,7 @@ class ResetScreen extends StatelessWidget {
                               //borderSide: const BorderSide(),
                             ),
                             hintText: 'Email',
-                            hintStyle: hintStyle,
+                            hintStyle: getHintStyle(context),
                           ),
                           onChanged: (value) {
                             _email = value;
@@ -76,7 +76,7 @@ class ResetScreen extends StatelessWidget {
                               width: double.maxFinite,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF586AF8),
+                                    primary: Theme.of(context).colorScheme.primary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           10.0),

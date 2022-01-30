@@ -33,7 +33,7 @@ class _ButtonWidgetState extends State<MainButton> {
       width: double.maxFinite,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            primary: Color(0xFF586AF8),
+            primary: Theme.of(context).colorScheme.primary,
             shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0),
             ),

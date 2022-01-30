@@ -22,7 +22,7 @@ class StatRow extends StatelessWidget {
         children: [
           Icon(
             iconData,
-            color: lightBlueColor,
+            color: Theme.of(context).colorScheme.primary,
             size: 24,
           ),
           Expanded(
