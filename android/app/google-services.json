@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "636882965110-hmfa8hno9jv5kbbi9ds3981q9p1h9h69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salle.cryper",
+            "certificate_hash": "daf8a51c24702ac0dc8e5918a7875a9a2bbf8117"
+          }
+        },
+        {
           "client_id": "636882965110-vj8a809c9d5ts5i3dvi7p604pj6fm803.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "636882965110-vj8a809c9d5ts5i3dvi7p604pj6fm803.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "636882965110-ugqvgh5aveu5mecnqmq2fu5bsno27eh1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.salle.cryper"
+              }
             }
           ]
         }
